@@ -54,3 +54,56 @@ router.post("/register", (req, res) => {
 		}
 	});
 });
+
+// @route POST api/users/login
+// @desc Login user and return JWT Token
+// @access Public
+router.post("/login", (req, res) => {
+	// Form validation
+	const { errors, isValid } = validateLoginInput(req.body);
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}
+
+	// Check if user exists
+	User.findOne({
+		email: req.body.email
+	}).then(user => {
+		if (!user) {
+			return res.status(404).json({
+				emailnotfound: "Email not found"
+			});
+		}
+		// Compare password hash
+		bcrypt.compare(req.body.password, user.password).then(isMatch => {
+			if (isMatch) {
+				// Password matches
+				// Create JWT payload
+				const payload = {
+					id: user.id,
+					name: user.name
+				};
+				// Sign token
+				jwt.sign(
+					payload,
+					keys.secretOrKey,
+					{
+						expiresIn: 3600 //seconds
+					},
+					(err, token) => {
+						// After signing return the token in authorization header
+						res.json({
+							success: true,
+							token: "Bearer " + token
+						});
+					}
+				);
+			} else {
+				return res.status(400).json({ wrongpassword: "Wrong password." });
+			}
+		});
+	});
+});
+
+// Export router with our users middleware loaded
+module.exports = router;

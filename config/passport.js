@@ -1,3 +1,5 @@
+// Passport is an unobtrusive authentication middleware for Node.js
+// Import JSON Web Token strategy for Passport library
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");

@@ -1,4 +1,4 @@
-const mongoose = require("express");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create user schema from Schema object from mongoose
