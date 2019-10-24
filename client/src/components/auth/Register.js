@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
+import classnames from 'classnames';
 
 class Register extends Component {
   constructor() {
@@ -12,6 +16,21 @@ class Register extends Component {
       password2: '',
       errors: {}
     };
+  }
+  
+  componentDidMount() {
+    // If logged in and user navigates to Register page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  getDerivedStateFromProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
   // assign function body to a variable and set it in onEvent to prevent having to bind(this)
@@ -55,18 +74,31 @@ class Register extends Component {
                   error={errors.name}
                   id='name'
                   type='text'
+                  className={classnames('', {
+                    invalid: errors.name
+                  })}
                 />
                 <label htmlFor='name'>Name</label>
+                <span className='red-text'>
+                  {errors.name}
+                </span>
               </div>
               <div className='input-field col s12'>
                 <input
                   onChange={this.onChange}
                   value={this.state.email}
+                  className={classnames('', {
+                    invalid: errors.email || errors.emailnotfound
+                  })}
                   error={errors.email}
                   id='email'
                   type='email'
                 />
                 <label htmlFor='email'>Email</label>
+                <span className='red-text'>
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
               </div>
               <div className='input-field col s12'>
                 <input
@@ -75,8 +107,14 @@ class Register extends Component {
                   error={errors.password}
                   id='password'
                   type='password'
+                  className={classnames("", {
+                    invalid: errors.password
+                  })}
                 />
                 <label htmlFor='password'>Password</label>
+                <span className="red-text">
+                  {errors.password}
+                </span>
               </div>
               <div className='input-field col s12'>
                 <input
@@ -85,8 +123,14 @@ class Register extends Component {
                   error={errors.password2}
                   id='password2'
                   type='password'
+                  className={classnames("", {
+                    invalid: errors.password2
+                  })}
                 />
                 <label htmlFor='password2'>Confirm Password</label>
+                <span className="red-text">
+                  {errors.password2}
+                </span>
               </div>
               <div className='col s12' style={{ paddingLeft: '11.250px' }}>
                 <button
@@ -108,4 +152,26 @@ class Register extends Component {
     );
   }
 }
-export default Register;
+
+// Since we cannot define types in our constructor, it is considered good convention to do so using the prop-types package.
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+/*
+You may also notice we wrapped our Register with a withRouter(). While it is easy to redirect within a component (can simply say this.props.history.push('/dashboard') for example), we can’t do that by default within an action. To allow us to redirect within an action, we
+* Used withRouter from react-router-dom, wrapping our component in our export withRouter()
+* Will add a parameter to this.props.history within our call to this.props.registerUser(newUser, this.props.history) in our onSubmit event so we can easily access it within our action (step iv below)
+*/
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register));
