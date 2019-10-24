@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import classnames from 'classnames';
+import validator from 'validator';
 
 class Register extends Component {
   constructor() {
@@ -25,17 +26,40 @@ class Register extends Component {
     }
   }
 
-  getDerivedStateFromProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
+      // console.log(nextProps.errors);
       this.setState({
         errors: nextProps.errors
       });
     }
   }
 
+  validateInput(id, value) {
+    let errors = { ...this.state.errors };
+    if ((id === 'email') & !validator.isEmail(value)) {
+      errors.email = 'Invalid email address.';
+    } else if (id === 'email') {
+      delete errors.email;
+    }
+    if ((id === 'name') & validator.isEmpty(value)) {
+      errors.name = "Name field is required.";
+    } else if (id === 'name') {
+      delete errors.name;
+    }
+    if ((id === 'password') & !validator.isLength(value, { min: 6, max: 30 })) {
+      delete errors.wrongpassword;
+      errors.password = 'Password must consist of 6 to 30 alphanumeric characters.';
+    } else if (id === 'password') {
+      delete errors.password;
+    }
+    return errors;
+  }
+
   // assign function body to a variable and set it in onEvent to prevent having to bind(this)
   onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
+    let errors = this.validateInput(e.target.id, e.target.value);
+    this.setState({ [e.target.id]: e.target.value, errors: errors });
   };
   onSubmit = e => {
     // Prevent default submit behavior
@@ -46,7 +70,8 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-    console.log(newUser);
+    this.props.registerUser(newUser, this.props.history); 
+    // console.log(newUser);
   };
 
   render() {

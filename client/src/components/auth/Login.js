@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import classnames from 'classnames';
+import validator from 'validator';
 
 class Login extends Component {
   constructor() {
@@ -18,7 +19,7 @@ class Login extends Component {
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -33,8 +34,26 @@ class Login extends Component {
     }
   }
 
+  // Client side basic input validation
+  validateInput(id, value) {
+    let errors = { ...this.state.errors };
+    if ((id === 'email') & !validator.isEmail(value)) {
+      errors.email = 'Invalid email address.';
+    } else if (id === 'email') {
+      delete errors.email;
+    }
+    if ((id === 'password') & !validator.isLength(value, { min: 6, max: 30 })) {
+      delete errors.wrongpassword;
+      errors.password = 'Password must consist of 6 to 30 alphanumeric characters.';
+    } else if (id === 'password') {
+      delete errors.password;
+    }
+    return errors;
+  }
+
   onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
+    let errors = this.validateInput(e.target.id, e.target.value);
+    this.setState({ [e.target.id]: e.target.value, errors: errors });
   };
   onSubmit = e => {
     e.preventDefault();
@@ -42,8 +61,10 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    console.log(userData);
-    this.props.loginUser(userData);
+    // console.log(userData);
+    if (Object.entries(this.state.errors).length === 0) {
+      this.props.loginUser(userData);
+    }
   };
   render() {
     const { errors } = this.state;
@@ -92,13 +113,13 @@ class Login extends Component {
                   id='password'
                   type='password'
                   className={classnames('', {
-                    invalid: errors.password || errors.passwordincorrect
+                    invalid: errors.password || errors.wrongpassword
                   })}
                 />
                 <label htmlFor='password'>Password</label>
                 <span className='red-text'>
                   {errors.password}
-                  {errors.passwordincorrect}
+                  {errors.wrongpassword}
                 </span>
               </div>
               <div className='col s12' style={{ paddingLeft: '11.250px' }}>
@@ -133,4 +154,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { loginUser })(Login);
+  { loginUser }
+)(Login);

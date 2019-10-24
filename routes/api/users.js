@@ -71,7 +71,7 @@ router.post("/login", (req, res) => {
 	}).then(user => {
 		if (!user) {
 			return res.status(404).json({
-				emailnotfound: "Email not found"
+				emailnotfound: "No user registered with this email address."
 			});
 		}
 		// Compare password hash
