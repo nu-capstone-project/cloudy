@@ -24,7 +24,7 @@ const store = createStore(
   compose(
     applyMiddleware(...middleware),
     // Comment below if running without redux devtools extension
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 
