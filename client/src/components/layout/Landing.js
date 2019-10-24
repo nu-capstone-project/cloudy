@@ -7,13 +7,12 @@ class Landing extends Component {
 				<div className='row'>
 					<div className='col s12 center-align'>
 						<h4>
-							<b>Build</b> a login/auth app with the {" "}
-							<span style={{ fontFamily: "monospace" }}>MERN</span> stack from
-							scratch
+							<b>Cloud Storage</b> for the new <span style={{ fontFamily: "monospace" }}>generation</span> 
 						</h4>
 						<p className='flow-text grey-text text-darken-1'>
-							Create a (minimal) full-stack app with user authentication via
-							passport and JWTs
+						Cloudy is a secure cloud storage platform, where you can store, share and work on all your files.
+						<br/>
+						You can access them on any device, anywhere you go! 
 						</p>
 						<br />
 						<div className='col s6'>
@@ -36,7 +35,7 @@ class Landing extends Component {
 									borderRadius: "3px",
 									letterSpacing: "1.5px"
 								}}
-								className='btn btn-large waves-effect white black-text'>
+								className='btn btn-large waves-effect hoverable white black-text'>
 								Log In
 							</Link>
 						</div>
