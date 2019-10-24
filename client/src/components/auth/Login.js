@@ -35,7 +35,7 @@ class Login extends Component {
   }
 
   // Client side basic input validation
-  validateInput(id, value) {
+  validateInput(id = '', value = '') {
     let errors = { ...this.state.errors };
     if ((id === 'email') & !validator.isEmail(value)) {
       errors.email = 'Invalid email address.';
@@ -47,6 +47,12 @@ class Login extends Component {
       errors.password = 'Password must consist of 6 to 30 alphanumeric characters.';
     } else if (id === 'password') {
       delete errors.password;
+    }
+    if ((id === '') & validator.isEmpty(this.state.email)) {
+      errors.email = 'Email field is required.';
+    }
+    if ((id === '') & validator.isEmpty(this.state.password)) {
+      errors.password = 'Password field is required.';
     }
     return errors;
   }
@@ -62,7 +68,13 @@ class Login extends Component {
       password: this.state.password
     };
     // console.log(userData);
-    if (Object.entries(this.state.errors).length === 0) {
+    // trigger default arg value for validateInput
+    let errors = this.validateInput();
+    this.setState({
+      errors: errors
+    });
+    errors = { ...errors, ...this.state.errors };
+    if (Object.entries(errors).length === 0) {
       this.props.loginUser(userData);
     }
   };

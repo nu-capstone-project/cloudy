@@ -18,11 +18,11 @@ class Register extends Component {
       errors: {}
     };
   }
-  
+
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -35,7 +35,7 @@ class Register extends Component {
     }
   }
 
-  validateInput(id, value) {
+  validateInput(id = '', value = '') {
     let errors = { ...this.state.errors };
     if ((id === 'email') & !validator.isEmail(value)) {
       errors.email = 'Invalid email address.';
@@ -43,7 +43,7 @@ class Register extends Component {
       delete errors.email;
     }
     if ((id === 'name') & validator.isEmpty(value)) {
-      errors.name = "Name field is required.";
+      errors.name = 'Name field is required.';
     } else if (id === 'name') {
       delete errors.name;
     }
@@ -52,6 +52,15 @@ class Register extends Component {
       errors.password = 'Password must consist of 6 to 30 alphanumeric characters.';
     } else if (id === 'password') {
       delete errors.password;
+    }
+    if ((id === '') & validator.isEmpty(this.state.name)) {
+      errors.name = 'Name field is required.';
+    }
+    if ((id === '') & validator.isEmpty(this.state.email)) {
+      errors.email = 'Email field is required.';
+    }
+    if ((id === '') & validator.isEmpty(this.state.password)) {
+      errors.password = 'Password field is required.';
     }
     return errors;
   }
@@ -70,9 +79,16 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-    this.props.registerUser(newUser, this.props.history); 
-    // console.log(newUser);
-  };
+    // trigger default arg value for validateInput
+    let errors = this.validateInput();
+    this.setState({
+      errors: errors
+    });
+    errors = { ...errors, ...this.state.errors };
+    if (Object.entries(errors).length === 0) {
+      this.props.registerUser(newUser, this.props.history);
+    }
+  }
 
   render() {
     const { errors } = this.state;
@@ -104,9 +120,7 @@ class Register extends Component {
                   })}
                 />
                 <label htmlFor='name'>Name</label>
-                <span className='red-text'>
-                  {errors.name}
-                </span>
+                <span className='red-text'>{errors.name}</span>
               </div>
               <div className='input-field col s12'>
                 <input
@@ -132,14 +146,12 @@ class Register extends Component {
                   error={errors.password}
                   id='password'
                   type='password'
-                  className={classnames("", {
+                  className={classnames('', {
                     invalid: errors.password
                   })}
                 />
                 <label htmlFor='password'>Password</label>
-                <span className="red-text">
-                  {errors.password}
-                </span>
+                <span className='red-text'>{errors.password}</span>
               </div>
               <div className='input-field col s12'>
                 <input
@@ -148,14 +160,12 @@ class Register extends Component {
                   error={errors.password2}
                   id='password2'
                   type='password'
-                  className={classnames("", {
+                  className={classnames('', {
                     invalid: errors.password2
                   })}
                 />
                 <label htmlFor='password2'>Confirm Password</label>
-                <span className="red-text">
-                  {errors.password2}
-                </span>
+                <span className='red-text'>{errors.password2}</span>
               </div>
               <div className='col s12' style={{ paddingLeft: '11.250px' }}>
                 <button
