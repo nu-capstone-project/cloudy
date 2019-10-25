@@ -82,12 +82,12 @@ class Login extends Component {
     const { errors } = this.state;
     return (
       <div className='container'>
-        <div style={{ marginTop: '4rem' }} className='row'>
-          <div className='col s8 offset-s2'>
+        <div style={{ marginTop: '2rem' }} className='row'>
+          <div className='col s12 m8 offset-m2'>
             <Link to='/' className='btn-flat waves-effect'>
               <i className='material-icons left'>keyboard_backspace</i> Back to home
             </Link>
-            <div className='col s12' style={{ paddingLeft: '11.250px' }}>
+            <div className='col s12'>
               <h4>
                 <b>Login</b> to{' '}
                 <span style={{ fontFamily: 'monospace' }} className='brand-logo black-text'>
