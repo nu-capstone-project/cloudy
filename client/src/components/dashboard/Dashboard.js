@@ -1,33 +1,56 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Upload from "../layout/Upload";
+import { Modal } from "react-materialize";
+
 class Dashboard extends Component {
-  
   render() {
     const { user } = this.props.auth;
     return (
-      <div style={{ height: '75vh' }} className='container valign-wrapper'>
+      <div style={{ height: "75vh" }} className='container valign-wrapper'>
         <div className='row'>
           <div className='col s12 center-align'>
-            <h4>
-              <b>Hey there,</b> {user.name.split(' ')[0]}
-              <p className='flow-text grey-text text-darken-1'>
-                You are logged into a full-stack{' '}
-                <span style={{ fontFamily: 'monospace' }}>MERN</span> app 👏
-              </p>
-            </h4>
+            <UploadModal />
           </div>
         </div>
       </div>
     );
   }
 }
+
+function UploadModal() {
+  return (
+    <Modal
+      style={{ width: "35%" }}
+      header='Select files to Upload'
+      trigger={
+        <button className='btn waves-effect waves-light hoverable blue accent-3'>
+          <i
+            class='material-icons'
+            style={{ fontSize: 18, verticalAlign: "middle" }}>
+            cloud_upload
+          </i>
+          <span style={{ paddingLeft: 8, verticalAlign: "middle" }}>
+            Upload
+          </span>
+        </button>
+      }
+      actions={
+        <button className='btn-flat modal-close waves-light waves-effect'>
+          Close
+        </button>
+      }
+      open='true'>
+      <Upload />
+    </Modal>
+  );
+}
+
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(
-  mapStateToProps,
-)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 class Navbar extends Component {
   constructor() {
@@ -22,7 +22,7 @@ class Navbar extends Component {
           <div className='nav-wrapper white'>
             <Link
               to='/'
-              style={{ fontFamily: 'monospace' }}
+              style={{ fontFamily: "monospace" }}
               className='brand-logo center waves-effect black-text'>
               <i className='material-icons'>cloud</i>
               CLOUDY
@@ -33,17 +33,24 @@ class Navbar extends Component {
                 <button
                   className='hide-on-large-only btn-flat waves-effect'
                   onClick={this.onLogoutClick}
-                  style={{ verticalAlign: 'top', paddingBottom: 50,  
-                    ...(this.props.auth.isAuthenticated ? {} : { display: 'none' }) }}>
+                  style={{
+                    verticalAlign: "top",
+                    paddingBottom: 50,
+                    ...(this.props.auth.isAuthenticated
+                      ? {}
+                      : { display: "none" })
+                  }}>
                   <i className='material-icons'>logout</i>
                 </button>
                 <button
                   style={{
-                    width: '110px',
-                    borderRadius: '3px',
-                    letterSpacing: '1.5px',
-                    marginTop: '0.5rem',
-                    ...(this.props.auth.isAuthenticated ? {} : { display: 'none' })
+                    width: "110px",
+                    borderRadius: "3px",
+                    letterSpacing: "1.2px",
+                    marginTop: "0.5rem",
+                    ...(this.props.auth.isAuthenticated
+                      ? {}
+                      : { display: "none" })
                   }}
                   onClick={this.onLogoutClick}
                   className='right btn waves-effect hide-on-med-and-down waves-light hoverable blue accent-3'>
