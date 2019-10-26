@@ -19,19 +19,19 @@ class Dashboard extends Component {
 }
 
 function UploadModal() {
+  const triggerBtn = (
+    <button className='btn-large waves-effect waves-light hoverable blue accent-3'>
+      <i class='material-icons' style={{ fontSize: 18, verticalAlign: 'top' }}>
+        cloud_upload
+      </i>
+      <span style={{ paddingLeft: 8, verticalAlign: 'top' }}>Upload</span>
+    </button>
+  );
   return (
     <Modal
       header='Select files to Upload'
-      trigger={
-        <button className='btn waves-effect waves-light hoverable blue accent-3'>
-          <i class='material-icons' style={{ fontSize: 18, verticalAlign: 'middle' }}>
-            cloud_upload
-          </i>
-          <span style={{ paddingLeft: 8, verticalAlign: 'middle' }}>Upload</span>
-        </button>
-      }
-      actions={<button className='btn-flat modal-close waves-light waves-effect'>Close</button>}
-      open='true'>
+      trigger={triggerBtn}
+      actions={<button className='btn-flat modal-close waves-light waves-effect'>Close</button>}>
       <Upload />
     </Modal>
   );

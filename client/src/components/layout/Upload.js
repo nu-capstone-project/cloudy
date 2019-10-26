@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import "./Upload.css";
-import Axios from "axios";
+import React, { Component } from 'react';
+import './Upload.css';
+import Axios from 'axios';
 
 class Upload extends Component {
   constructor(props) {
@@ -18,11 +18,11 @@ class Upload extends Component {
 
   onUploadClickHandler = e => {
     // The file from a state is appended as a file to FormData
-    const data = new FormData();
-    for (let file in this.state.selectedFiles) {
-      data.append("file", file);
+    let data = new FormData();
+    for (var x = 0; x < this.state.selectedFiles.length; x++) {
+      data.append('file', this.state.selectedFiles[x]);
     }
-    Axios.post("/api/upload", data).then(res => {
+    Axios.post('/api/files/upload', data).then(res => {
       console.log(res.statusText);
     });
   };
@@ -37,7 +37,7 @@ class Upload extends Component {
         <center>
           <button
             type='button'
-            style={{ width: "80%", height: 50 }}
+            style={{ width: '80%', height: 50 }}
             class='btn waves-effect waves-light green'
             onClick={this.onUploadClickHandler}>
             Upload Files
