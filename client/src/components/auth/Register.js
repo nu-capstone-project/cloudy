@@ -50,14 +50,29 @@ class Register extends Component {
     if ((id === 'password') & !validator.isLength(value, { min: 6, max: 30 })) {
       delete errors.wrongpassword;
       errors.password = 'Password must consist of 6 to 30 alphanumeric characters.';
-    } else if (id === 'password') {
+    }
+    else if (id === 'password') {
+      if (value != this.state.password2) {
+        errors.password2 = 'Passwords do not match.';
+      } else {
+        delete errors.password2;
+      }
+
       delete errors.password;
+    }
+    if ((id === 'password2') & value != this.state.password) {
+      errors.password2 = 'Passwords do not match.';
+    } else if (id === 'password2') {
+      delete errors.password2;
     }
     if ((id === '') & validator.isEmpty(this.state.name)) {
       errors.name = 'Name field is required.';
     }
     if ((id === '') & validator.isEmpty(this.state.email)) {
       errors.email = 'Email field is required.';
+    }
+    if ((id === '') & validator.isEmpty(this.state.password2)) {
+      errors.password2 = 'Confirm password field is required.';
     }
     if ((id === '') & validator.isEmpty(this.state.password)) {
       errors.password = 'Password field is required.';
