@@ -1,14 +1,13 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import Upload from "../layout/Upload";
-import { Modal } from "react-materialize";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Upload from '../layout/Upload';
+import { Modal } from 'react-materialize';
 
 class Dashboard extends Component {
   render() {
-    const { user } = this.props.auth;
     return (
-      <div style={{ height: "75vh" }} className='container valign-wrapper'>
+      <div style={{ height: '75vh' }} className='container valign-wrapper'>
         <div className='row'>
           <div className='col s12 center-align'>
             <UploadModal />
@@ -22,25 +21,16 @@ class Dashboard extends Component {
 function UploadModal() {
   return (
     <Modal
-      style={{ width: "35%" }}
       header='Select files to Upload'
       trigger={
         <button className='btn waves-effect waves-light hoverable blue accent-3'>
-          <i
-            class='material-icons'
-            style={{ fontSize: 18, verticalAlign: "middle" }}>
+          <i class='material-icons' style={{ fontSize: 18, verticalAlign: 'middle' }}>
             cloud_upload
           </i>
-          <span style={{ paddingLeft: 8, verticalAlign: "middle" }}>
-            Upload
-          </span>
+          <span style={{ paddingLeft: 8, verticalAlign: 'middle' }}>Upload</span>
         </button>
       }
-      actions={
-        <button className='btn-flat modal-close waves-light waves-effect'>
-          Close
-        </button>
-      }
+      actions={<button className='btn-flat modal-close waves-light waves-effect'>Close</button>}
       open='true'>
       <Upload />
     </Modal>

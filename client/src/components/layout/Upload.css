@@ -1,8 +1,18 @@
+/* Rule for Dashboard Upload Modal */
+.modal {
+  width: 95%;
+}
+
+@media only screen and (min-width: 993px) {
+  .modal {
+    width: 35%;
+  }
+}
+
 .files input {
   outline: 2px dashed #92b0b3;
   outline-offset: -10px;
-  -webkit-transition: outline-offset 0.15s ease-in-out,
-    background-color 0.15s linear;
+  -webkit-transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
   transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
   padding: 120px 0px 85px 35%;
   text-align: center !important;
@@ -12,8 +22,7 @@
 .files input:focus {
   outline: 2px dashed #92b0b3;
   outline-offset: -10px;
-  -webkit-transition: outline-offset 0.15s ease-in-out,
-    background-color 0.15s linear;
+  -webkit-transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
   transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
   border: 1px solid #92b0b3;
 }
@@ -28,7 +37,7 @@
   width: 50px;
   right: 0;
   height: 56px;
-  content: "";
+  content: '';
   background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
   display: block;
   margin: 0 auto;
@@ -46,7 +55,7 @@
   width: 100%;
   right: 0;
   height: 57px;
-  content: " Or drag it here. ";
+  content: ' Or drag it here. ';
   display: block;
   margin: 0 auto;
   color: #000;

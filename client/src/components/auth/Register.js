@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { registerUser } from '../../actions/authActions';
-import classnames from 'classnames';
-import validator from 'validator';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import classnames from "classnames";
+import validator from "validator";
 
 class Register extends Component {
   constructor() {
     super();
     // Create state for Register fields
     this.state = {
-      name: '',
-      email: '',
-      password: '',
-      password2: '',
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
       errors: {}
     };
   }
@@ -22,7 +22,7 @@ class Register extends Component {
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push("/dashboard");
     }
   }
 
@@ -35,47 +35,47 @@ class Register extends Component {
     }
   }
 
-  validateInput(id = '', value = '') {
+  validateInput(id = "", value = "") {
     let errors = { ...this.state.errors };
-    if ((id === 'email') & !validator.isEmail(value)) {
-      errors.email = 'Invalid email address.';
-    } else if (id === 'email') {
+    if ((id === "email") & !validator.isEmail(value)) {
+      errors.email = "Invalid email address.";
+    } else if (id === "email") {
       delete errors.email;
     }
-    if ((id === 'name') & validator.isEmpty(value)) {
-      errors.name = 'Name field is required.';
-    } else if (id === 'name') {
+    if ((id === "name") & validator.isEmpty(value)) {
+      errors.name = "Name field is required.";
+    } else if (id === "name") {
       delete errors.name;
     }
-    if ((id === 'password') & !validator.isLength(value, { min: 6, max: 30 })) {
+    if ((id === "password") & !validator.isLength(value, { min: 6, max: 30 })) {
       delete errors.wrongpassword;
-      errors.password = 'Password must consist of 6 to 30 alphanumeric characters.';
-    }
-    else if (id === 'password') {
-      if (value != this.state.password2) {
-        errors.password2 = 'Passwords do not match.';
+      errors.password =
+        "Password must consist of 6 to 30 alphanumeric characters.";
+    } else if (id === "password") {
+      if (value !== this.state.password2) {
+        errors.password2 = "Passwords do not match.";
       } else {
         delete errors.password2;
       }
 
       delete errors.password;
     }
-    if ((id === 'password2') & value != this.state.password) {
-      errors.password2 = 'Passwords do not match.';
-    } else if (id === 'password2') {
+    if ((id === "password2") & (value !== this.state.password)) {
+      errors.password2 = "Passwords do not match.";
+    } else if (id === "password2") {
       delete errors.password2;
     }
-    if ((id === '') & validator.isEmpty(this.state.name)) {
-      errors.name = 'Name field is required.';
+    if ((id === "") & validator.isEmpty(this.state.name)) {
+      errors.name = "Name field is required.";
     }
-    if ((id === '') & validator.isEmpty(this.state.email)) {
-      errors.email = 'Email field is required.';
+    if ((id === "") & validator.isEmpty(this.state.email)) {
+      errors.email = "Email field is required.";
     }
-    if ((id === '') & validator.isEmpty(this.state.password2)) {
-      errors.password2 = 'Confirm password field is required.';
+    if ((id === "") & validator.isEmpty(this.state.password2)) {
+      errors.password2 = "Confirm password field is required.";
     }
-    if ((id === '') & validator.isEmpty(this.state.password)) {
-      errors.password = 'Password field is required.';
+    if ((id === "") & validator.isEmpty(this.state.password)) {
+      errors.password = "Password field is required.";
     }
     return errors;
   }
@@ -103,16 +103,17 @@ class Register extends Component {
     if (Object.entries(errors).length === 0) {
       this.props.registerUser(newUser, this.props.history);
     }
-  }
+  };
 
   render() {
     const { errors } = this.state;
     return (
       <div className='container'>
-        <div style={{ marginTop: '2rem' }} className='row'>
+        <div style={{ marginTop: "2rem" }} className='row'>
           <div className='col s12 m8 offset-m2'>
             <Link to='/' className='btn-flat waves-effect'>
-              <i className='material-icons left'>keyboard_backspace</i> Back to home
+              <i className='material-icons left'>keyboard_backspace</i> Back to
+              home
             </Link>
             <div className='col s12'>
               <h4>
@@ -130,7 +131,7 @@ class Register extends Component {
                   error={errors.name}
                   id='name'
                   type='text'
-                  className={classnames('', {
+                  className={classnames("", {
                     invalid: errors.name
                   })}
                 />
@@ -141,7 +142,7 @@ class Register extends Component {
                 <input
                   onChange={this.onChange}
                   value={this.state.email}
-                  className={classnames('', {
+                  className={classnames("", {
                     invalid: errors.email || errors.emailnotfound
                   })}
                   error={errors.email}
@@ -161,7 +162,7 @@ class Register extends Component {
                   error={errors.password}
                   id='password'
                   type='password'
-                  className={classnames('', {
+                  className={classnames("", {
                     invalid: errors.password
                   })}
                 />
@@ -175,20 +176,20 @@ class Register extends Component {
                   error={errors.password2}
                   id='password2'
                   type='password'
-                  className={classnames('', {
+                  className={classnames("", {
                     invalid: errors.password2
                   })}
                 />
                 <label htmlFor='password2'>Confirm Password</label>
                 <span className='red-text'>{errors.password2}</span>
               </div>
-              <div className='col s12' style={{ paddingLeft: '11.250px' }}>
+              <div className='col s12' style={{ paddingLeft: "11.250px" }}>
                 <button
                   style={{
-                    width: '150px',
-                    borderRadius: '3px',
-                    letterSpacing: '1.5px',
-                    marginTop: '1rem'
+                    width: "150px",
+                    borderRadius: "3px",
+                    letterSpacing: "1.5px",
+                    marginTop: "1rem"
                   }}
                   type='submit'
                   className='btn btn-large waves-effect waves-light hoverable blue accent-3'>
