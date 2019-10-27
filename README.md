@@ -9,6 +9,7 @@ npm install
 cd client
 npm install
 cd ..
+docker-compose up -d
 npm run dev
 ```
 Browser window should open with the project running
