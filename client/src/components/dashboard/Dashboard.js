@@ -7,10 +7,10 @@ import { Modal } from 'react-materialize';
 class Dashboard extends Component {
   render() {
     return (
-      <div style={{ height: '75vh' }} className='container valign-wrapper'>
+      <div className='container'>
         <div className='row'>
-          <div className='col s12 center-align'>
-            <UploadModal />
+          <div className='col s12'>
+            <UploadModalButton />
           </div>
         </div>
       </div>
@@ -18,9 +18,9 @@ class Dashboard extends Component {
   }
 }
 
-function UploadModal() {
+function UploadModalButton() {
   const triggerBtn = (
-    <button className='btn-large waves-effect waves-light hoverable blue accent-3'>
+    <button className='btn-large waves-effect waves-light blue accent-3'>
       <i className='material-icons' style={{ fontSize: 18, verticalAlign: 'top' }}>
         cloud_upload
       </i>
@@ -32,7 +32,8 @@ function UploadModal() {
       header='Select files to Upload'
       trigger={triggerBtn}
       actions={<button className='btn-flat modal-close waves-light waves-effect'>Close</button>}
-      open='true'>
+      open={true}
+      >
       <Upload />
     </Modal>
   );

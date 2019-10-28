@@ -34,10 +34,11 @@ var upload = multer({
 
 router.post('/upload', passport.authenticate('jwt', { session: false }), function(req, res) {
   userID = req.user._id;
-  console.log('Incoming file upload from: ' + userID + ', ' + req.user.name);
+  // console.log('Incoming file upload from: ' + userID + ', ' + req.user.name);
   // check if directory exists
   if (!fs.existsSync('./files/' + userID)) {
     // if not create directory
+    if(!fs.existsSync('./files')) fs.mkdirSync('./files');
     fs.mkdirSync('./files/' + userID);
   }
 

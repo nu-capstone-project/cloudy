@@ -4,6 +4,7 @@ import Axios from 'axios';
 import M from 'materialize-css';
 
 class Upload extends Component {
+  fileInputRef;
   constructor(props) {
     super(props);
     this.state = {
@@ -14,16 +15,21 @@ class Upload extends Component {
   }
 
   checkMimeType = e => {
+    let checkType = (type, index) => {
+      if (files[index].type === type) {
+        err = files[index].type + ' ';
+        return false;
+      }
+      return true;
+    }
+
     let files = e.target.files;
     let err = '';
     // mime types block list
     const types = ['text/javascript'];
+    
     for (let x = 0; x < files.length; x++) {
-      types.every(type => {
-        if (files[x].type === type) {
-          err = files[x].type + ' ';
-        }
-      });
+      types.every(type => checkType(type, x));
     }
     err += 'uploading not supported';
     if (err !== 'uploading not supported') {
@@ -39,7 +45,8 @@ class Upload extends Component {
   onFileChangeHandler = e => {
     if (this.checkMimeType(e)) {
       this.setState({
-        selectedFiles: e.target.files
+        selectedFiles: e.target.files,
+        errors: ''
       });
     }
   };
@@ -59,10 +66,10 @@ class Upload extends Component {
           let progress = (ProgressEvent.loaded / ProgressEvent.total) * 100;
           if (progress === 100) {
             M.toast({ html: 'Upload complete.', displayLength: 2000 });
-            // BUG: Unable to remove file text from input field
-            // this.setState({
-            //   selectedFiles: ''
-            // });
+            this.setState({
+              selectedFiles: ''
+            });
+            this.fileInputRef.value = '';
           }
           this.setState({
             loaded: progress
@@ -78,7 +85,7 @@ class Upload extends Component {
     return (
       <>
         <div className='files'>
-          <input type='file' multiple onChange={this.onFileChangeHandler} />
+          <input type='file' multiple onChange={this.onFileChangeHandler} ref={ref => this.fileInputRef = ref}/>
         </div>
         <center>
           <div
