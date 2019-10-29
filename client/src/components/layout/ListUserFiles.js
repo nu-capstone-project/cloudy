@@ -127,9 +127,9 @@ class ListUserFiles extends Component {
         <table className='highlight'>
           <thead>
             <tr className='grey-text text-darken-2'>
-              <th style={{ width: '40%' }}>Name</th>
-              <th style={{ width: '30%' }}>Last Modified</th>
-              <th style={{ width: '10%' }}>File Size</th>
+              <th style={{ width: '30%' }}>Name</th>
+              <th style={{ width: '35%' }}>Last Modified</th>
+              <th style={{ width: '15%' }}>File Size</th>
               <th style={{ width: '20%' }} className='center'>
                 Actions
               </th>
