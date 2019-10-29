@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Upload from '../layout/Upload';
+import ListUserFiles from '../layout/ListUserFiles';
 import { Modal } from 'react-materialize';
 
 class Dashboard extends Component {
@@ -11,6 +12,11 @@ class Dashboard extends Component {
         <div className='row'>
           <div className='col s12'>
             <UploadModalButton />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col s12'>
+            <ListUserFiles />
           </div>
         </div>
       </div>
@@ -32,8 +38,8 @@ function UploadModalButton() {
       header='Select files to Upload'
       trigger={triggerBtn}
       actions={<button className='btn-flat modal-close waves-light waves-effect'>Close</button>}
-      open={true}
-      >
+      // open={true}
+    >
       <Upload />
     </Modal>
   );

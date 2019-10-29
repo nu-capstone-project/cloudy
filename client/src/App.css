@@ -28,4 +28,27 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
   color: #000;
 }
 
+/* input field prefix icon colors */
+.input-field .prefix {
+  color: rgb(85, 85, 85);
+}
+.input-field .prefix.active {
+  color: #000;
+}
+
 /* ---- */
+
+/* Rule for Modal */
+.modal {
+  width: 95%;
+}
+
+.modal-content {
+  padding: 25px 25px 10px 25px !important;
+}
+
+@media only screen and (min-width: 993px) {
+  .modal {
+    width: 35%;
+  }
+}

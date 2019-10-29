@@ -17,23 +17,24 @@ class Upload extends Component {
   checkMimeType = e => {
     let checkType = (type, index) => {
       if (files[index].type === type) {
+        // make = -> += to append errors
         err = files[index].type + ' ';
         return false;
       }
       return true;
-    }
+    };
 
     let files = e.target.files;
     let err = '';
     // mime types block list
     const types = ['text/javascript'];
-    
+
     for (let x = 0; x < files.length; x++) {
       types.every(type => checkType(type, x));
     }
     err += 'uploading not supported';
     if (err !== 'uploading not supported') {
-      e.target.value = null; // discard selected file
+      e.target.value = null; // discard selected files
       this.setState({
         errors: err
       });
@@ -70,6 +71,7 @@ class Upload extends Component {
               selectedFiles: ''
             });
             this.fileInputRef.value = '';
+            setTimeout(() => window.location.reload(), 2050);
           }
           this.setState({
             loaded: progress
@@ -85,7 +87,12 @@ class Upload extends Component {
     return (
       <>
         <div className='files'>
-          <input type='file' multiple onChange={this.onFileChangeHandler} ref={ref => this.fileInputRef = ref}/>
+          <input
+            type='file'
+            multiple
+            onChange={this.onFileChangeHandler}
+            ref={ref => (this.fileInputRef = ref)}
+          />
         </div>
         <center>
           <div
