@@ -1,6 +1,5 @@
-Yash rastogi
-Smit Shah
-Mukul Sachdeva
-Avi Gupta
-Ronak Jain
-
+yash rastogi
+smit shah
+mukul sachdeva
+ronak jain
+avi gupta
