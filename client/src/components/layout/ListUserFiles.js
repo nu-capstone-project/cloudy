@@ -43,25 +43,32 @@ class ListUserFiles extends Component {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
+  deleteFile(fileName) {
+    Axios.delete('/api/files/delete/' + fileName)
+      .then(response => {
+        if (response.data === 'deleted') {
+          M.toast({ html: 'Deleted file.', displayLength: 1000 });
+          this.state.files.forEach((fileObj, index) => {
+            if (fileObj.name === fileName) {
+              let files = this.state.files.splice(0);
+              files.splice(index, 1);
+              this.setState({ files: files });
+            }
+          });
+        }
+      })
+      .catch(err => {
+        M.toast({ html: err });
+      });
+  }
+
   handleActionClick = (e, fileName) => {
+    if (e.target.innerText === 'download') {
+      this.downloadFile(e, fileName);
+    }
     if (e.target.innerText === 'delete') {
       // delete case
-      Axios.delete('/api/files/delete/' + fileName)
-        .then(response => {
-          if (response.data === 'deleted') {
-            M.toast({ html: 'Deleted file.', displayLength: 1000 });
-            this.state.files.forEach((fileObj, index) => {
-              if (fileObj.name === fileName) {
-                let files = this.state.files.splice(0);
-                files.splice(index, 1);
-                this.setState({ files: files });
-              }
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.deleteFile(fileName);
     }
     if (e.target.id === 'do-rename') {
       if (this.state.newName !== '') {
@@ -83,7 +90,7 @@ class ListUserFiles extends Component {
     }
   };
 
-  handleRowClick = async (e, fileName) => {
+  downloadFile = async (e, fileName) => {
     Axios.get('/api/files/get/' + fileName)
       .then(res => {
         Download(res.data, fileName);
@@ -108,7 +115,6 @@ class ListUserFiles extends Component {
           name={fileObj.name}
           modified={fileObj.modified}
           size={fileObj.size}
-          onRowClick={this.handleRowClick}
           onClick={this.handleActionClick}
           onChange={this.onChange}
         />
@@ -140,7 +146,7 @@ function File(props) {
     </button>
   );
   return (
-    <tr onClick={e => props.onRowClick(e, props.name)}>
+    <tr>
       <td>
         {/* <Link to='' className='' style={{ color: 'rgb(0,0,0,0.87)' }}> */}
         {props.name}
@@ -149,6 +155,9 @@ function File(props) {
       <td>{props.modified}</td>
       <td>{props.size}</td>
       <td className='center'>
+        <button className='material-icons-outlined btn-flat' onClick={e => props.onClick(e, props.name)}>
+          download
+        </button>
         <button className='material-icons-outlined btn-flat' onClick={e => props.onClick(e, props.name)}>
           delete
         </button>
