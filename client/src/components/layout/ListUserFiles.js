@@ -62,28 +62,29 @@ class ListUserFiles extends Component {
       });
   }
 
+  renameFile(fileName) {
+    Axios.post('/api/files/rename/' + fileName, { newName: this.state.newName })
+      .then(res => {
+        if (res.data === 'renamed') {
+          M.toast({ html: 'Renamed file.', displayLength: 1000 });
+          setTimeout(() => window.location.reload(), 1050);
+        }
+      })
+      .catch(err => {
+        M.toast({ html: err, displayLength: 1000 });
+      });
+  }
+
   handleActionClick = (e, fileName) => {
     if (e.target.innerText === 'download') {
       this.downloadFile(e, fileName);
     }
     if (e.target.innerText === 'delete') {
-      // delete case
       this.deleteFile(fileName);
     }
     if (e.target.id === 'do-rename') {
       if (this.state.newName !== '') {
-        console.log(fileName);
-        // rename file
-        Axios.post('/api/files/rename/' + fileName, { newName: this.state.newName })
-          .then(res => {
-            if (res.data === 'renamed') {
-              M.toast({ html: 'Renamed file.', displayLength: 1000 });
-              setTimeout(() => window.location.reload(), 1050);
-            }
-          })
-          .catch(err => {
-            M.toast({ html: err, displayLength: 1000 });
-          });
+        this.renameFile(fileName);
       } else {
         M.toast({ html: 'No file name specified.', displayLength: 1000 });
       }
@@ -126,10 +127,12 @@ class ListUserFiles extends Component {
         <table className='highlight'>
           <thead>
             <tr className='grey-text text-darken-2'>
-              <th>Name</th>
-              <th>Last Modified</th>
-              <th>File Size</th>
-              <th className='center'>Actions</th>
+              <th style={{ width: '40%' }}>Name</th>
+              <th style={{ width: '30%' }}>Last Modified</th>
+              <th style={{ width: '10%' }}>File Size</th>
+              <th style={{ width: '20%' }} className='center'>
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>{fileRows}</tbody>
