@@ -1,0 +1,54 @@
+/* Change container width */
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 95%;
+}
+@media only screen and (min-width: 601px) {
+  .container {
+    width: 85%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 70%;
+  }
+}
+
+/* Change focused textInput color */
+
+input:not(.browser-default):not(.invalid):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+
+input:not(.browser-default):not(.invalid):focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label {
+  color: #000;
+}
+
+/* input field prefix icon colors */
+.input-field .prefix {
+  color: rgb(85, 85, 85);
+}
+.input-field .prefix.active {
+  color: #000;
+}
+
+/* ---- */
+
+/* Rule for Modal */
+.modal {
+  width: 95%;
+}
+
+.modal-content {
+  padding: 25px 25px 10px 25px !important;
+}
+
+@media only screen and (min-width: 993px) {
+  .modal {
+    width: 35%;
+  }
+}
