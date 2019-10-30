@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/cloudy/static/css/main.8264eba4.chunk.css",
-    "main.js": "/cloudy/static/js/main.ab9a1942.chunk.js",
-    "main.js.map": "/cloudy/static/js/main.ab9a1942.chunk.js.map",
+    "main.js": "/cloudy/static/js/main.0848c39b.chunk.js",
+    "main.js.map": "/cloudy/static/js/main.0848c39b.chunk.js.map",
     "runtime-main.js": "/cloudy/static/js/runtime-main.5c1b3a31.js",
     "runtime-main.js.map": "/cloudy/static/js/runtime-main.5c1b3a31.js.map",
     "static/js/2.53e67a5d.chunk.js": "/cloudy/static/js/2.53e67a5d.chunk.js",
     "static/js/2.53e67a5d.chunk.js.map": "/cloudy/static/js/2.53e67a5d.chunk.js.map",
     "index.html": "/cloudy/index.html",
-    "precache-manifest.5a2082ea3edaa572cce14704a46633af.js": "/cloudy/precache-manifest.5a2082ea3edaa572cce14704a46633af.js",
+    "precache-manifest.abdc5c659615387a7c04e47c10d71071.js": "/cloudy/precache-manifest.abdc5c659615387a7c04e47c10d71071.js",
     "service-worker.js": "/cloudy/service-worker.js",
     "static/css/main.8264eba4.chunk.css.map": "/cloudy/static/css/main.8264eba4.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.5c1b3a31.js",
     "static/js/2.53e67a5d.chunk.js",
     "static/css/main.8264eba4.chunk.css",
-    "static/js/main.ab9a1942.chunk.js"
+    "static/js/main.0848c39b.chunk.js"
   ]
 }
