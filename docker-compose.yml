@@ -1,9 +1,26 @@
-version: '3.3'
+version: '3'
+
 services:
-    mongodb:
-        volumes:
-            - './mongodb/mongodb:/data/db'
-        ports:
-            - '27017-27019:27017-27019'
-        container_name: mongodb-file-share
-        image: mongo
+  mongodb:
+    volumes:
+      - './mongodb/mongodb:/data/db'
+    container_name: mongodb
+    image: mongo
+    network_mode: 'host'
+
+  frontend:
+    build:
+      context: client/.
+    container_name: frontend
+    network_mode: 'host'
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+    container_name: backend
+    restart: always
+    depends_on:
+      - mongodb
+    network_mode: 'host'
