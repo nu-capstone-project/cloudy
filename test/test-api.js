@@ -29,12 +29,12 @@ it("Register API validation with invalid data", function(done) {
   );
 });
 
-it("Login returning session cookie", done => {
+it("Login not returning session cookie", done => {
   request.post(
     "http://localhost:5000/api/users/login",
     { json: { email: "yashrastogi@gmail.com", password: "yashrastogi" } },
     (err, res, body) => {
-      expect(res).to.have.cookie("sessionid");
+      expect(res).to.not.have.cookie("sessionid");
       done();
     }
   );
