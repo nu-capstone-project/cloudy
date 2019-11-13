@@ -8,7 +8,8 @@
     "start": "node server.js",
     "server": "nodemon server.js --config .nodemonconfig",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "./node_modules/.bin/mocha"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +28,10 @@
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4",
+    "request": "^2.88.0"
   }
 }
