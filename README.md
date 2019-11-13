@@ -7,10 +7,6 @@ Open a terminal in that directory
 
 Make sure that you have docker and docker-compose installed
 ```
-npm install
-cd client
-npm install
-cd ..
 docker-compose up
 ```
 Open http://localhost:3000 in a browser
