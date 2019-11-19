@@ -34,7 +34,6 @@ var upload = multer({
 
 router.post('/upload', passport.authenticate('jwt', { session: false }), function(req, res) {
   userID = req.user._id;
-  // console.log('Incoming file upload from: ' + userID + ', ' + req.user.name);
   // check if directory exists
   if (!fs.existsSync('./files/' + userID)) {
     // if not create directory
@@ -115,7 +114,7 @@ router.get('/get/:fileName', passport.authenticate('jwt', { session: false }), f
   const userDir = path.join(__dirname + '../../../', 'files/' + userID);
   const filePath = path.join(userDir, req.params.fileName);
   fs.exists(filePath, exists => {
-    if (exists) return res.status(200).sendFile(filePath);
+    if (exists) return res.download(filePath);
     return res.status(404);
   });
 });

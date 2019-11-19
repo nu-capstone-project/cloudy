@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import FlipMove from 'react-flip-move';
-import Download from 'js-file-download';
+import Download from 'js-file-download';  
 import { Modal } from 'react-materialize';
 import { isUndefined } from 'util';
 import M from 'materialize-css';
@@ -92,13 +92,18 @@ class ListUserFiles extends Component {
   };
 
   downloadFile = async (e, fileName) => {
-    Axios.get('/api/files/get/' + fileName)
-      .then(res => {
-        Download(res.data, fileName);
-      })
-      .catch(err => {
-        M.toast({ html: err });
-      });
+    Axios({
+      url: '/api/files/get/' + fileName, //your url
+      method: 'GET',
+      responseType: 'blob', // important
+    }).then((response) => {
+       const url = window.URL.createObjectURL(new Blob([response.data]));
+       const link = document.createElement('a');
+       link.href = url;
+       link.setAttribute('download', fileName); //or any other extension
+       document.body.appendChild(link);
+       link.click();
+    });
   };
 
   onChange = e => {
@@ -128,9 +133,9 @@ class ListUserFiles extends Component {
           <thead>
             <tr className='grey-text text-darken-2'>
               <th style={{ width: '30%' }}>Name</th>
-              <th style={{ width: '35%' }}>Last Modified</th>
-              <th style={{ width: '15%' }}>File Size</th>
-              <th style={{ width: '20%' }} className='center'>
+              <th>Last Modified</th>
+              <th>File Size</th>
+              <th style={{ width: '30%' }} className='center'>
                 Actions
               </th>
             </tr>
@@ -151,9 +156,7 @@ function File(props) {
   return (
     <tr>
       <td>
-        {/* <Link to='' className='' style={{ color: 'rgb(0,0,0,0.87)' }}> */}
         {props.name}
-        {/* </Link> */}
       </td>
       <td>{props.modified}</td>
       <td>{props.size}</td>
