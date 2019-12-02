@@ -77,7 +77,11 @@ class Upload extends Component {
             loaded: progress
           });
         }
-      });
+      })
+      // .then(response => {
+      //   if (response.data === 'duplicate') {
+      //     M.toast({ html: 'Duplicate file.', displayLength: 1000 });}
+      // });
     } else {
       this.setState({ errors: 'No files selected.' });
     }

@@ -46,17 +46,41 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), functio
     if (err) {
       return res.status(500).json(err);
     }
-    req.files.forEach(file => console.log('Upload for ' + userID + ', ' + req.user.name + ', of file ' + file.originalname + ' complete'))
     req.files.forEach(file => {
       var savedFile = './files/' + userID + '/' + file.originalname;
-      fs.readFile(savedFile, function(err, buf) {
-        fs.writeFile(savedFile+'.md5', md5(buf), function(err) {
-          // if(err) {
-          //     return console.log(err);
-          // }
-          // console.log("The file was saved!");
-      }); 
-      });
+      // get all md5
+      const userDir = path.join(__dirname + '../../../', 'files/' + userID);
+      var md5CurrFile;
+      fs.readFile(savedFile, (err, buf) => {
+        md5CurrFile = md5(buf);
+        fs.readdir(userDir, function (err, files) {
+          files.forEach(file => {
+            fileNameSplit = file.split('.');
+            if (fileNameSplit[fileNameSplit.length - 1] == 'md5') {
+              fs.readFile(userDir + '/' + file, 'utf8', (err, data) => {
+                // compare md5
+                if (data == md5CurrFile) {
+                  // handle md5 duplicate
+                  fs.unlink(savedFile, err => console.log(err));
+                  fs.unlink(savedFile+'.md5', err => console.log(err));
+                  // TODO: Show duplicate warning
+                  // return res.status(409).json('duplicate');
+                }
+              })
+            }
+          });
+        });
+        // save md5
+        fs.readFile(savedFile, (err, buf) => {
+          fs.writeFile(savedFile + '.md5', md5CurrFile, () => 'done');
+        });
+      })
+
+
+      //
+
+
+      console.log('Upload for ' + userID + ', ' + req.user.name + ', of file ' + file.originalname + ' complete')
     })
     return res.status(200).send(req.file);
   });
@@ -74,11 +98,11 @@ router.post('/list', passport.authenticate('jwt', { session: false }), function 
       return res.status(400).json(err);
     }
     let fileObjects = [];
-    
+
     files.forEach(file => {
       // do not display md5 files
       fileNameSplit = file.split('.');
-      if(fileNameSplit[fileNameSplit.length-1] != 'md5') {
+      if (fileNameSplit[fileNameSplit.length - 1] != 'md5') {
         fileObjects.push({
           name: file,
           modified: fs.statSync(path.join(userDir, file)).mtime,
@@ -101,6 +125,7 @@ router.delete('/delete/:fileName', passport.authenticate('jwt', { session: false
     if (err) return res.status(400).json(err);
     return res.status(200).json('deleted');
   });
+  fs.unlink(path.join(userDir + '/' + req.params.fileName+'.md5'), err => {});
 });
 
 // @route POST api/files/rename
