@@ -4,15 +4,12 @@
 Clone the Project to a directory
 
 Open a terminal in that directory
+
+Make sure that you have docker and docker-compose installed
 ```
-npm install
-cd client
-npm install
-cd ..
-docker-compose up -d
-npm run dev
+docker-compose up
 ```
-Browser window should open with the project running
+Open http://localhost:3000 in a browser
 
 ## Helpful Resources
 
